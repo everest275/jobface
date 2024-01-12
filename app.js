@@ -1,10 +1,14 @@
 import express from 'express';
-import cors from 'cors'
 //Las otras rutas se importan aca
 import tipo from './src/Routes/tipo.js';
-
+import dotenv from 'dotenv'
+dotenv.config()
 const app = express();
-app.use(cors());
-app.use(express.json())
+app.get('/profile', (req, res) => {
+    res.render('profile',{
+        name:'everest',
+        age:'27'
+    }); // Asegúrate de tener el archivo 'profile.ejs' en la carpeta 'views'
+});
 app.use(tipo)
 export default app
