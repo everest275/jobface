@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "babel-node index.js",
+    "start": "node index",
     "dev": "nodemon node index"
   },
   "keywords": [],
