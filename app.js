@@ -1,14 +1,37 @@
 import express from 'express';
-//Las otras rutas se importan aca
-import tipo from './src/Routes/tipo.js';
+import morgan from 'morgan'
 import dotenv from 'dotenv'
-dotenv.config()
+import cookieParser from 'cookie-parser';
+import Routes from './src/jobface/assets/routes/routing.routes.js'
+import { config } from 'dotenv'
+import { fileURLToPath } from 'url';
+import path from 'path';
+import 'ejs';
+import bodyParser from 'body-parser'
+
+// Express engine
 const app = express();
-app.get('/profile', (req, res) => {
-    res.render('profile',{
-        name:'everest',
-        age:'27'
-    }); // Asegúrate de tener el archivo 'profile.ejs' en la carpeta 'views'
-});
-app.use(tipo)
+app.use(bodyParser.json());
+app.use(morgan('dev'));
+app.use(express.json())
+app.use(cookieParser())
+
+//Routes configuration
+app.use(Routes)
+
+//ejs config
+dotenv.config()
+config()
+
+// Archivos estáticos
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+//EJS engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+//Middlewares
+app.use(express.static(path.join(__dirname, 'public')));
+
 export default app
